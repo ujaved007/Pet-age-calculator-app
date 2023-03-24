@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'components/header.dart';
+import 'components/navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +14,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pet Age Calculator',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue,
+          outlinedButtonTheme: OutlinedButtonThemeData(
+              style: OutlinedButton.styleFrom(
+            textStyle: const TextStyle(color: Color(0xff000072)),
+          ))),
       home: const RootPage(),
     );
   }
@@ -30,13 +34,30 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
+  String currentPage = 'cat';
+
+  setPage(page) {
+    setState(() {
+      currentPage = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Header(
-        heroImage: 'assets/images/cat.png',
-        petType: 'cat',
-      ),
-    );
+    return Scaffold(
+        body: ListView(
+      padding: EdgeInsets.zero,
+      scrollDirection: Axis.vertical,
+      children: [
+        Header(
+          heroImage: currentPage == 'cat'
+              ? 'assets/images/cat.png'
+              : 'assets/images/dog.png',
+          petType: currentPage,
+          backgroudColor: currentPage == 'cat' ? 0xFFFFC76C : 0xffFC9A9A,
+        ),
+        Navigation(pageSetter: setPage, currentPage: currentPage)
+      ],
+    ));
   }
 }

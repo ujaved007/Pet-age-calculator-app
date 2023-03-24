@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class Header extends StatelessWidget {
   final String heroImage;
   final String petType;
-  const Header({super.key, required this.heroImage, required this.petType});
+  final int backgroudColor;
+  const Header(
+      {super.key,
+      required this.heroImage,
+      required this.petType,
+      required this.backgroudColor});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +16,9 @@ class Header extends StatelessWidget {
         height: 300,
         width: double.infinity,
         padding: const EdgeInsets.only(left: 20, right: 20),
-        decoration: const BoxDecoration(
-            color: Color.fromRGBO(255, 199, 108, 1),
-            borderRadius: BorderRadiusDirectional.only(
+        decoration: BoxDecoration(
+            color: Color(backgroudColor),
+            borderRadius: const BorderRadiusDirectional.only(
                 bottomEnd: Radius.circular(40),
                 bottomStart: Radius.circular(40))),
         child: SafeArea(
