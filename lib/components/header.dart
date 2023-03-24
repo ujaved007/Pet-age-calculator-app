@@ -13,17 +13,20 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 300,
-        width: double.infinity,
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        decoration: BoxDecoration(
-            color: Color(backgroudColor),
-            borderRadius: const BorderRadiusDirectional.only(
-                bottomEnd: Radius.circular(40),
-                bottomStart: Radius.circular(40))),
-        child: SafeArea(
-            child: Row(children: [
-          Expanded(
+      height: 300,
+      width: double.infinity,
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      decoration: BoxDecoration(
+        color: Color(backgroudColor),
+        borderRadius: const BorderRadiusDirectional.only(
+          bottomEnd: Radius.circular(40),
+          bottomStart: Radius.circular(40),
+        ),
+      ),
+      child: SafeArea(
+        child: Row(
+          children: [
+            Expanded(
               flex: 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,11 +36,13 @@ class Header extends StatelessWidget {
                     'Pet Age',
                     style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
-                  const Text('Calculator',
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
+                  const Text(
+                    'Calculator',
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(
                     height: 12,
                   ),
@@ -46,8 +51,9 @@ class Header extends StatelessWidget {
                     style: const TextStyle(color: Colors.white),
                   )
                 ],
-              )),
-          Expanded(
+              ),
+            ),
+            Expanded(
               flex: 2,
               child: Column(
                 children: [
@@ -57,7 +63,11 @@ class Header extends StatelessWidget {
                     width: 200,
                   )
                 ],
-              ))
-        ])));
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
