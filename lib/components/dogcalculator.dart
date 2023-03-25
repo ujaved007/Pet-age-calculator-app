@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'answer.dart';
+import '../utils/catcalculations.dart';
+import '../utils/md_dog_calculations.dart';
 
 class DogCalculator extends StatefulWidget {
   const DogCalculator({super.key});
@@ -13,6 +15,8 @@ class DogCalculator extends StatefulWidget {
 class _DogCalculatorState extends State<DogCalculator> {
   final _yearsController = TextEditingController();
   final _monthsController = TextEditingController();
+  String _breed = 'small';
+  var _calculatedAge;
   var _humanYears;
   var _humanMonths;
   bool _isFormValid = true;
@@ -29,44 +33,33 @@ class _DogCalculatorState extends State<DogCalculator> {
         setState(() {
           _isFormValid = true;
         });
-        catCalculator(
-          _monthsController.text == '' ? 0 : int.parse(_monthsController.text),
-          _yearsController.text == '' ? 0 : int.parse(_yearsController.text),
-        );
-        //show Answer widget
-        setState(() {
-          _showAnswer = true;
-        });
+        if (_breed == 'small') {
+          // cats and small dogs have identical age progressions throughout their life.
+          //So can re-use catCalculations() in dog small breed calculations too.
+          calculateAge(catCalculations);
+        } else if (_breed == 'medium') {
+          // cats and all dogs have identical age progression until 5years old.
+          //So can re-use catCalculations() in those calculations too.
+          if (int.parse(_yearsController.text) <= 5) {
+            calculateAge(catCalculations);
+          } else {
+            calculateAge(mdDogCalculations);
+          }
+        }
       }
     }
   }
 
-  void catCalculator(int months, int years) {
-    if (years == 0 && months > 0) {
-      int age = months * 15;
-      setState(() {
-        _humanYears = (age / 12).floor();
-        _humanMonths = age % 12;
-      });
-    } else if (years == 1) {
-      int age = months * 9;
-      setState(() {
-        _humanYears = 15 + (age / 12).floor();
-        _humanMonths = age % 12;
-      });
-    } else if (years == 2) {
-      int age = months * 4;
-      setState(() {
-        _humanYears = 24 + (age / 12).floor();
-        _humanMonths = age % 12;
-      });
-    } else if (years > 2) {
-      int age = months * 4;
-      setState(() {
-        _humanYears = 24 + (age / 12).floor() + ((years - 2) * 4);
-        _humanMonths = age % 12;
-      });
-    }
+  void calculateAge(calculator) {
+    _calculatedAge = calculator(
+      _monthsController.text == '' ? 0 : int.parse(_monthsController.text),
+      _yearsController.text == '' ? 0 : int.parse(_yearsController.text),
+    );
+    setState(() {
+      _humanYears = _calculatedAge['years'];
+      _humanMonths = _calculatedAge['months'];
+      _showAnswer = true;
+    });
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -79,8 +72,74 @@ class _DogCalculatorState extends State<DogCalculator> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('How old is your dog?'),
-            const SizedBox(height: 12),
+            const Text(
+              'Select the breed size',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                ActionChip(
+                  label: const Text('Small'),
+                  onPressed: () {
+                    setState(() {
+                      _breed = 'small';
+                    });
+                  },
+                  labelPadding: const EdgeInsets.only(left: 12, right: 12),
+                  shape: StadiumBorder(
+                    side: BorderSide(
+                      color: _breed == 'small'
+                          ? const Color(0xff000072)
+                          : Colors.transparent,
+                      width: 1.4,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ActionChip(
+                  label: const Text('Medium'),
+                  onPressed: () {
+                    setState(() {
+                      _breed = 'medium';
+                    });
+                  },
+                  labelPadding: const EdgeInsets.only(left: 12, right: 12),
+                  shape: StadiumBorder(
+                    side: BorderSide(
+                      color: _breed == 'medium'
+                          ? const Color(0xff000072)
+                          : Colors.transparent,
+                      width: 1.4,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ActionChip(
+                  label: const Text('Large'),
+                  onPressed: () {
+                    setState(() {
+                      _breed = 'large';
+                    });
+                  },
+                  labelPadding: const EdgeInsets.only(left: 12, right: 12),
+                  shape: StadiumBorder(
+                    side: BorderSide(
+                      color: _breed == 'large'
+                          ? const Color(0xff000072)
+                          : Colors.transparent,
+                      width: 1.4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'How old is your dog?',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
             TextFormField(
               controller: _yearsController,
               keyboardType: TextInputType.number,

@@ -36,9 +36,6 @@ class _CatCalculatorState extends State<CatCalculator> {
           _isFormValid = true;
           _humanYears = _calculatedAge['years'];
           _humanMonths = _calculatedAge['months'];
-        });
-        //show Answer widget
-        setState(() {
           _showAnswer = true;
         });
       }
@@ -63,8 +60,11 @@ class _CatCalculatorState extends State<CatCalculator> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('How old is your cat?'),
-            const SizedBox(height: 12),
+            const Text(
+              'How old is your cat?',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
             TextFormField(
               controller: _yearsController,
               keyboardType: TextInputType.number,

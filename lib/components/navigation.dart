@@ -15,12 +15,19 @@ class Navigation extends StatelessWidget {
           ActionChip(
             label: const Text('Cats'),
             onPressed: () => pageSetter('cat'),
-            labelPadding: const EdgeInsets.only(left: 12, right: 12),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
+            labelPadding:
+                const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
             backgroundColor:
                 currentPage == 'cat' ? const Color(0xff000072) : Colors.black12,
             labelStyle: TextStyle(
               color:
                   currentPage == 'cat' ? Colors.white : const Color(0xff000072),
+              fontSize: 16,
             ),
           ),
           const SizedBox(
@@ -29,12 +36,19 @@ class Navigation extends StatelessWidget {
           ActionChip(
             label: const Text('Dogs'),
             onPressed: () => pageSetter('dog'),
-            labelPadding: const EdgeInsets.only(left: 12, right: 12),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
+            labelPadding:
+                const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
             backgroundColor:
                 currentPage == 'dog' ? const Color(0xff000072) : Colors.black12,
             labelStyle: TextStyle(
               color:
                   currentPage == 'dog' ? Colors.white : const Color(0xff000072),
+              fontSize: 16,
             ),
           )
         ],
