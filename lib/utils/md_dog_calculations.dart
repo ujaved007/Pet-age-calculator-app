@@ -10,18 +10,18 @@ mdDogCalculations(int months, int years) {
     humanMonths = age % 12;
     return {'years': humanYears, 'months': humanMonths};
   } else if (years > 5) {
-    age = months * (mdDogMultiplier(years));
-    humanYears = mdDogEq(years) + (age / 12).floor();
+    age = months * (_mdDogMultiplier(years));
+    humanYears = _mdDogEq(years) + (age / 12).floor();
     humanMonths = age % 12;
     return {'years': humanYears, 'months': humanMonths};
   }
 }
 
-int mdDogEq(int age) {
+int _mdDogEq(int age) {
   int n = age - 5;
   return ((1 / 4) * ((18 * n) + (pow(-1, n) + 151))).round();
 }
 
-int mdDogMultiplier(int years) {
-  return (mdDogEq(years + 1) - mdDogEq(years));
+int _mdDogMultiplier(int years) {
+  return (_mdDogEq(years + 1) - _mdDogEq(years));
 }

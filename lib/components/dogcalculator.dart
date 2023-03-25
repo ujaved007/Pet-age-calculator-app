@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'answer.dart';
 import '../utils/catcalculations.dart';
 import '../utils/md_dog_calculations.dart';
+import '../utils/lg_dog_calculations.dart';
 
 class DogCalculator extends StatefulWidget {
   const DogCalculator({super.key});
@@ -44,6 +45,12 @@ class _DogCalculatorState extends State<DogCalculator> {
             calculateAge(catCalculations);
           } else {
             calculateAge(mdDogCalculations);
+          }
+        } else if (_breed == 'large') {
+          if (int.parse(_yearsController.text) <= 5) {
+            calculateAge(catCalculations);
+          } else {
+            calculateAge(lgDogCalculations);
           }
         }
       }
