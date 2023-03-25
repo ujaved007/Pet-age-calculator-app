@@ -30,10 +30,13 @@ class _CatCalculatorState extends State<CatCalculator> {
           _isFormValid = true;
         });
         catCalculator(
-            _monthsController.text == ''
-                ? 0
-                : int.parse(_monthsController.text),
-            _yearsController.text == '' ? 0 : int.parse(_yearsController.text));
+          _monthsController.text == '' ? 0 : int.parse(_monthsController.text),
+          _yearsController.text == '' ? 0 : int.parse(_yearsController.text),
+        );
+        //show Answer widget
+        setState(() {
+          _showAnswer = true;
+        });
       }
     }
   }
@@ -64,10 +67,13 @@ class _CatCalculatorState extends State<CatCalculator> {
         _humanMonths = age % 12;
       });
     }
-    //show Answer widget
-    setState(() {
-      _showAnswer = true;
-    });
+  }
+
+  @override
+  void dispose() {
+    _yearsController.dispose();
+    _monthsController.dispose();
+    super.dispose();
   }
 
   final _formKey = GlobalKey<FormState>();

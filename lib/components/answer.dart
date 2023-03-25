@@ -21,7 +21,9 @@ class Answer extends StatelessWidget {
           ),
           color: Colors.black12),
       child: Text(
-          'Your $petType is $years years ${months > 0 ? 'and $months months ' : ''}old.'),
+        'Your $petType is $years years ${months > 0 ? 'and $months months ' : ''}old.',
+        style: const TextStyle(fontSize: 16),
+      ),
     );
   }
 }
