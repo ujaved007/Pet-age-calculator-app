@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'components/header.dart';
 import 'components/navigation.dart';
 import 'components/catcalculator.dart';
+import 'components/dogcalculator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -73,7 +74,7 @@ class _RootPageState extends State<RootPage> {
             backgroudColor: currentPage == 'cat' ? 0xFFFFC76C : 0xffFC9A9A,
           ),
           Navigation(pageSetter: setPage, currentPage: currentPage),
-          CatCalculator()
+          currentPage == 'cat' ? const CatCalculator() : const DogCalculator()
         ],
       ),
     );

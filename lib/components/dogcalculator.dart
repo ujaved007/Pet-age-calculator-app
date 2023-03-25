@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'answer.dart';
-import '../utils/catcalculations.dart';
 
-class CatCalculator extends StatefulWidget {
-  const CatCalculator({super.key});
+class DogCalculator extends StatefulWidget {
+  const DogCalculator({super.key});
 
   @override
-  State<CatCalculator> createState() => _CatCalculatorState();
+  State<DogCalculator> createState() => _DogCalculatorState();
 }
 
-class _CatCalculatorState extends State<CatCalculator> {
+class _DogCalculatorState extends State<DogCalculator> {
   final _yearsController = TextEditingController();
   final _monthsController = TextEditingController();
-  var _calculatedAge;
   var _humanYears;
   var _humanMonths;
   bool _isFormValid = true;
@@ -28,15 +26,13 @@ class _CatCalculatorState extends State<CatCalculator> {
           _showAnswer = false;
         });
       } else {
-        _calculatedAge = catCalculations(
+        setState(() {
+          _isFormValid = true;
+        });
+        catCalculator(
           _monthsController.text == '' ? 0 : int.parse(_monthsController.text),
           _yearsController.text == '' ? 0 : int.parse(_yearsController.text),
         );
-        setState(() {
-          _isFormValid = true;
-          _humanYears = _calculatedAge['years'];
-          _humanMonths = _calculatedAge['months'];
-        });
         //show Answer widget
         setState(() {
           _showAnswer = true;
@@ -45,15 +41,35 @@ class _CatCalculatorState extends State<CatCalculator> {
     }
   }
 
-  @override
-  void dispose() {
-    _yearsController.dispose();
-    _monthsController.dispose();
-    super.dispose();
+  void catCalculator(int months, int years) {
+    if (years == 0 && months > 0) {
+      int age = months * 15;
+      setState(() {
+        _humanYears = (age / 12).floor();
+        _humanMonths = age % 12;
+      });
+    } else if (years == 1) {
+      int age = months * 9;
+      setState(() {
+        _humanYears = 15 + (age / 12).floor();
+        _humanMonths = age % 12;
+      });
+    } else if (years == 2) {
+      int age = months * 4;
+      setState(() {
+        _humanYears = 24 + (age / 12).floor();
+        _humanMonths = age % 12;
+      });
+    } else if (years > 2) {
+      int age = months * 4;
+      setState(() {
+        _humanYears = 24 + (age / 12).floor() + ((years - 2) * 4);
+        _humanMonths = age % 12;
+      });
+    }
   }
 
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,7 +79,7 @@ class _CatCalculatorState extends State<CatCalculator> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('How old is your cat?'),
+            const Text('How old is your dog?'),
             const SizedBox(height: 12),
             TextFormField(
               controller: _yearsController,
@@ -116,7 +132,7 @@ class _CatCalculatorState extends State<CatCalculator> {
             const SizedBox(height: 20),
             _showAnswer
                 ? Answer(
-                    petType: 'cat', years: _humanYears, months: _humanMonths)
+                    petType: 'dog', years: _humanYears, months: _humanMonths)
                 : const SizedBox()
           ],
         ),
